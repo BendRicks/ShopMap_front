@@ -1,0 +1,48 @@
+.add_span {
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.remove_last_p {
+    cursor: pointer;
+}
+
+.page_span {
+    color: blue;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.selected_page_span {
+    color: black;
+    font-size: 15px;
+}
+
+.shop_main_image {
+    width: 90%;
+}
+
+.shop_name {
+    font-size: 30px;
+}
+
+.about_creation_text {
+    font-size: 18px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.description_container {
+    height: fit-content;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+.moderation_span {
+    cursor: pointer;
+}
+
+.md_table {
+    border: 1px solid black;
+}
