@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 
 export default function SignUp({ setCookie, setAuthorized }) {
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let [login, setLogin] = useState('')
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
@@ -27,7 +29,7 @@ export default function SignUp({ setCookie, setAuthorized }) {
                 },
                 body: JSON.stringify(data),
             }
-            fetch('http://localhost:8080/api/auth/register', params)
+            fetch(`${url}/api/auth/register`, params)
                 .then((resp) => resp.json())
                 .then((data) => {
                     console.log(data)

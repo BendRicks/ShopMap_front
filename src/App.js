@@ -21,6 +21,8 @@ import UserPageModeration from './pages/user_page_moderation';
 
 export default function App() {
 
+  const url = process.env.REACT_APP_BACKEND_URL
+
   const [cookies, setCookie] = useCookies(['jwt_token'])
   let [authorized, setAuthorized] = useState({userId: null, userRole: null})
   let firstLoaded = true
@@ -35,7 +37,7 @@ export default function App() {
           "Authorization": `Bearer ${cookies['jwt_token']}`,
         },
       }
-      fetch('http://localhost:8080/api/users/current/authorities', params)
+      fetch(`${url}/api/users/current/authorities`, params)
       .then((resp) => resp.json())
       .then((data) => {
         if (data.userId && data.userRole){

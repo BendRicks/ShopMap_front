@@ -8,6 +8,8 @@ import remarkGfm from "remark-gfm"
 
 export default function ChangeShop({cookies}){
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let { id } = useParams()
 
     let [name, setName] = useState(null)
@@ -22,7 +24,7 @@ export default function ChangeShop({cookies}){
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/shops/${id}`)
+        fetch(`${url}/api/shops/${id}`)
             .then((resp) => resp.json())
             .then((data) => {
                 if (data.message)
@@ -57,7 +59,7 @@ export default function ChangeShop({cookies}){
                 },
                 body: JSON.stringify(shop),
             }
-            fetch('http://localhost:8080/api/shops/', params)
+            fetch(`${url}/api/shops/`, params)
             .then((resp) => resp.json())
             .then((data) => {
                 if (data.message || data.error){

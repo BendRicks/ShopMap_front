@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserPage({ cookies }) {
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let [user, setUser] = useState({ id: '', username: '', email: '', creationTime: null, role: null, shops: [] })
 
     const navigate = useNavigate()
@@ -16,7 +18,7 @@ export default function UserPage({ cookies }) {
                 "Authorization": `Bearer ${cookies['jwt_token']}`,
             },
         }
-        fetch('http://localhost:8080/api/users/current', params)
+        fetch(`${url}/api/users/current`, params)
             .then((resp) => {
                 if (resp.status == 401) {
                     navigate('/logout')

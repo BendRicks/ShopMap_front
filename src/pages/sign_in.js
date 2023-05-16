@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 
 export default function SignIn({setCookie, setAuthorized}){
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let [login, setLogin] = useState('')
     let [password, setPassword] = useState('')
     let [logButtonPressed, setLogButtonPressed] = useState(false)
@@ -26,7 +28,7 @@ export default function SignIn({setCookie, setAuthorized}){
                     },
                     body: JSON.stringify(data),
                 }
-                fetch('http://localhost:8080/api/auth/login', params)
+                fetch(`${url}/api/auth/login`, params)
                 .then((resp) => resp.json())
                 .then((data) => {
                     console.log(data)

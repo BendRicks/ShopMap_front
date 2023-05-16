@@ -8,6 +8,8 @@ import remarkGfm from "remark-gfm"
 
 export default function CreateShop({ cookies }) {
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let [name, setName] = useState('')
     let [description, setDescription] = useState('')
     let [mainImageURL, setMainImageURL] = useState('')
@@ -36,7 +38,7 @@ export default function CreateShop({ cookies }) {
                 },
                 body: JSON.stringify(shop),
             }
-            fetch('http://localhost:8080/api/shops/', params)
+            fetch(`${url}/api/shops/`, params)
                 .then((resp) => resp.json())
                 .then((data) => {
                     console.log(data)

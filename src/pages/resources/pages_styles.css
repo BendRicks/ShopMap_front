@@ -46,3 +46,30 @@
 .md_table {
     border: 1px solid black;
 }
+
+.main_description_p {
+    font-size: 26px;
+    width: 80%;
+    word-wrap: break-word;
+}
+
+.main_page_photo_div {
+    width: 100%;
+    min-width: 600px;
+    background-image: url(https://thumbs.dreamstime.com/b/vector-flat-abstract-city-map-perspective-black-white-geographical-map-vector-abstract-city-map-perspective-view-148777263.jpg);
+    background-size: 100%;
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shop_image {
+    max-width: 90%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.creator_link {
+    cursor: pointer;
+}

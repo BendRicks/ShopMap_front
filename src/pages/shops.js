@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function Shops(){
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let [shops, setShops] = useState([])
     let [page, setPage] = useState(0)
     let [pages, setPages] = useState(0)
@@ -30,7 +32,7 @@ export default function Shops(){
 
     useEffect(() => {
         if (!reloaded){
-            fetch(`http://localhost:8080/api/shops/?page=${page}&size=${selectedSize.value}&param=name&dir=${selectedDirection.value}&nameLike=${nameLike}`)
+            fetch(`${url}/api/shops/?page=${page}&size=${selectedSize.value}&param=name&dir=${selectedDirection.value}&nameLike=${nameLike}`)
             .then((resp) => resp.json())
             .then((data) => {
                 setShops(data.data)

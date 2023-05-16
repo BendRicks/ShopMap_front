@@ -8,6 +8,8 @@ import remarkGfm from 'remark-gfm'
 
 export default function Shop({ cookies, authorization }) {
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let { id } = useParams()
     let [toggler, setToggler] = useState(false)
     let [shop, setShop] = useState({ id: null, creator: null, name: null, description: null, mainImageURL: null, shopStatus: null, addresses: [], additionalImages: [{}] })
@@ -19,7 +21,7 @@ export default function Shop({ cookies, authorization }) {
 
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/shops/${id}`)
+        fetch(`${url}/api/shops/${id}`)
             .then((resp) => resp.json())
             .then((data) => {
                 if (data.message) {
@@ -50,7 +52,7 @@ export default function Shop({ cookies, authorization }) {
                 },
                 body: JSON.stringify(shop),
             }
-            fetch('http://localhost:8080/api/shops/', params)
+            fetch(`${url}/api/shops/`, params)
                 .then((resp) => resp.json())
                 .then((data) => {
                     if (data.message || data.error) {
@@ -69,7 +71,7 @@ export default function Shop({ cookies, authorization }) {
 
     function moderationMenu() {
         switch (authorization.userRole) {
-            case 'ROLE_ADMIN': return (<><p>{status}</p><span className="moderation_span" onClick={() => changeStatus('OPERATING')}>Verify</span> <span className="moderation_span" onClick={() => changeStatus('REFUSED')}>Refuse</span> <span className="moderation_span" onClick={() => changeStatus('BANNED')}>Ban</span></>)
+            case 'ROLE_ADMIN': return (<><p>{status}</p><a className="creator_link" onClick={() => navigate(`/user/${shop.creator.id}`)}>Creator</a><span className="moderation_span" onClick={() => changeStatus('OPERATING')}>Verify</span> <span className="moderation_span" onClick={() => changeStatus('REFUSED')}>Refuse</span> <span className="moderation_span" onClick={() => changeStatus('BANNED')}>Ban</span></>)
             case 'ROLE_MODERATOR': return (<><p>{status}</p><span className="moderation_span" onClick={() => changeStatus('OPERATING')}>Verify</span> <span className="moderation_span" onClick={() => changeStatus('REFUSED')}>Refuse</span></>)
             default: return (<></>)
         }
@@ -80,7 +82,7 @@ export default function Shop({ cookies, authorization }) {
             {moderationMenu()}
             {shop.creator && shop.creator.id === authorization.userId ? <button onClick={() => navigate(`/shop/${id}/change`)}>Change</button> : <></>}
             <p className="shop_name">{shop.name}</p>
-            <img src={shop.mainImageURL} alt="Shop main image" />
+            <img src={shop.mainImageURL} className="shop_image" alt="Shop main image" />
             {shop.additionalImages.length > 0 ?
                 <button onClick={() => setToggler(!toggler)}>Show additional sources</button>
                 : <></>

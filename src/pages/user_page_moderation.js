@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function UserPageModeration({ cookies, authorization }) {
 
+    const url = process.env.REACT_APP_BACKEND_URL
     let { id } = useParams()
 
     let [user, setUser] = useState({ id: '', username: '', email: '', creationTime: null, role: null, shops: [] })
@@ -22,7 +23,7 @@ export default function UserPageModeration({ cookies, authorization }) {
                 "Authorization": `Bearer ${cookies['jwt_token']}`,
             },
         }
-        fetch(`http://localhost:8080/api/users/${id}`, params)
+        fetch(`${url}/api/users/${id}`, params)
             .then((resp) => {
                 if (resp.status == 401) {
                     navigate('/logout')
@@ -39,8 +40,7 @@ export default function UserPageModeration({ cookies, authorization }) {
                 }
             })
             .catch((err) => {
-                alert(err.message)
-                navigate('/users')
+                navigate('/')
             })
 
     }, [])
@@ -53,7 +53,7 @@ export default function UserPageModeration({ cookies, authorization }) {
                     "Authorization": `Bearer ${cookies['jwt_token']}`
                 },
             }
-            fetch(`http://localhost:8080/api/users/${id}/status/${status}`, params)
+            fetch(`${url}/api/users/${id}/status/${status}`, params)
                 .then((resp) => resp.json())
                 .then((data) => {
                     if (data.message || data.error) {
@@ -73,7 +73,7 @@ export default function UserPageModeration({ cookies, authorization }) {
                     "Authorization": `Bearer ${cookies['jwt_token']}`
                 },
             }
-            fetch(`http://localhost:8080/api/users/${id}/role/${role}`, params)
+            fetch(`${url}/api/users/${id}/role/${role}`, params)
                 .then((resp) => resp.json())
                 .then((data) => {
                     if (data.message || data.error) {
@@ -97,8 +97,8 @@ export default function UserPageModeration({ cookies, authorization }) {
 
     return (
         <UserPageContainer>
-            {authorization.userRole === "ROLE_ADMIN" ? <div>Role: {user.role} <button onClick={() => changeRole('ROLE_MODERATOR')}>Moderator</button> <button onClick={() => changeRole('ROLE_ADMIN')}>User</button></div> : <></>}
-            <div><button>Verify</button><button>Ban</button></div>
+            {authorization.userRole === "ROLE_ADMIN" && user.role !== "ROLE_ADMIN" ? <div>Role: {user.role} <button onClick={() => changeRole('ROLE_MODERATOR')}>Moderator</button> <button onClick={() => changeRole('ROLE_ADMIN')}>User</button></div> : <></>}
+            {user.role !== "ROLE_ADMIN" ? <div><button>Verify</button><button>Ban</button></div> : <></>}
             <p>Id: {user.id}</p>
             <p>Username: {user.username}</p>
             <p>Email: {user.email ? user.email : <a href="/create/email">Add email</a>}</p>

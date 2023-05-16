@@ -5,6 +5,8 @@ import './resources/pages_styles.css'
 
 export default function ShopsModeration({cookies}){
 
+    const url = process.env.REACT_APP_BACKEND_URL
+
     let [shops, setShops] = useState([])
     let [page, setPage] = useState(0)
     let [pages, setPages] = useState(0)
@@ -19,7 +21,7 @@ export default function ShopsModeration({cookies}){
                     "Authorization": `Bearer ${cookies['jwt_token']}`
                 },
             }
-            fetch(`http://localhost:8080/api/shops/moderation`, params)
+            fetch(`${url}/api/shops/moderation`, params)
             .then((resp) => resp.json())
             .then((data) => {
                 setShops(data.data)
